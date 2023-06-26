@@ -1,0 +1,20 @@
+夏皮罗一威尔克检验法(Shapiro-Wilk test)
+
+from scipy import stats
+import pandas as pd
+import numpy as np
+#读取excel表
+data = pd.read_excel('data.xlsx')
+#对其进行处理，计算每一列的平均值加三倍标准差，将该列的空值替换为该值
+#1，8；9，16；17，24
+for i in range(17, 24):
+    mean = data.iloc[:, i].mean()
+    std = data.iloc[:, i].std()
+    data.iloc[:, i] = data.iloc[:, i].fillna(mean + 3 * std)
+
+
+#对每一列进行夏皮罗一威尔克检验法检验0.05水平下的显著性
+for i in range(17, 24):
+    print(i)
+    print(stats.shapiro(data.iloc[:, i]))
+    print('\n')
